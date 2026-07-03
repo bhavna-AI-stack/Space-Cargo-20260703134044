@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Space Cargo Runner — layout preview</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0e1117;
+    color: #e7edf6;
+    padding: 28px 24px 60px;
+  }
+  h1 { font-size: 20px; margin: 0 0 6px; letter-spacing: .3px; }
+  .lede { color: #93a1b8; font-size: 13px; margin: 0 0 4px; max-width: 760px; line-height: 1.5; }
+  .note { color: #6f7d92; font-size: 12px; margin: 0 0 26px; max-width: 760px; line-height: 1.5; }
+  h2 { font-size: 15px; margin: 30px 0 14px; color: #00e6c0; letter-spacing: .4px; }
+  .row { display: flex; flex-wrap: wrap; gap: 26px; align-items: flex-start; }
+  .device { display: flex; flex-direction: column; gap: 8px; }
+  .frame-wrap { border: 1px solid #29323f; border-radius: 10px; overflow: hidden; background: #06070f; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+  iframe { border: 0; display: block; transform-origin: top left; }
+  .caption { font-size: 12px; color: #93a1b8; }
+  .caption b { color: #e7edf6; font-weight: 600; }
+</style>
+</head>
+<body>
+  <h1>Space Cargo Runner — layout preview</h1>
+  <p class="lede">Approximate preview of the reworked <b>home screen</b> and <b>wallet modal</b>, rendered with the app's real
+  <code>App.css</code> + <code>console.css</code>. Each frame is a true device-width viewport, so the responsive breakpoints
+  behave exactly as they will in the built app.</p>
+  <p class="note">This is a static layout check, not the live game (icons are simplified and there's no Phaser canvas behind it).
+  For the real, interactive test, run <code>npm run dev</code> in <code>apps/frontend</code> or push to <code>main</code> and let GitHub Actions deploy.</p>
+
+  <h2>Home screen — every control stays on screen; scrollable comms panel above the pinned dashboard</h2>
+  <div class="row" id="row-menu"></div>
+
+  <h2>Wallet modal — stacks to one column on phones; provider tap now shows the "Open in app" screen (no empty pane)</h2>
+  <div class="row" id="row-wallet"></div>
+
+  <script>
+    var DEVICES = [
+      { name: "iPhone SE", w: 375, h: 667, scale: 0.60 },
+      { name: "iPhone 14/15", w: 390, h: 844, scale: 0.52 },
+      { name: "iPad (portrait)", w: 768, h: 1024, scale: 0.44 },
+      { name: "Laptop", w: 1280, h: 800, scale: 0.44 }
+    ];
+
+    function buildRow(rowId, src) {
+      var row = document.getElementById(rowId);
+      DEVICES.forEach(function (d) {
+        var device = document.createElement("div");
+        device.className = "device";
+
+        var wrap = document.createElement("div");
+        wrap.className = "frame-wrap";
+        wrap.style.width = Math.round(d.w * d.scale) + "px";
+        wrap.style.height = Math.round(d.h * d.scale) + "px";
+
+        var f = document.createElement("iframe");
+        f.src = src;
+        f.width = d.w;
+        f.height = d.h;
+        f.style.width = d.w + "px";
+        f.style.height = d.h + "px";
+        f.style.transform = "scale(" + d.scale + ")";
+        f.scrolling = "no";
+
+        wrap.appendChild(f);
+
+        var cap = document.createElement("div");
+        cap.className = "caption";
+        cap.innerHTML = "<b>" + d.name + "</b> · " + d.w + "×" + d.h;
+
+        device.appendChild(wrap);
+        device.appendChild(cap);
+        row.appendChild(device);
+      });
+    }
+
+    buildRow("row-menu", "menu.html");
+    buildRow("row-wallet", "wallet.html");
+  </script>
+</body>
+</html>

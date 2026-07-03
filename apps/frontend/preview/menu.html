@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Menu preview</title>
+<!-- Real app stylesheets so this preview matches production exactly -->
+<link rel="stylesheet" href="../src/App.css" />
+<link rel="stylesheet" href="../src/styles/console.css" />
+<style>
+  html, body { margin: 0; height: 100%; }
+  body {
+    background:
+      radial-gradient(1200px 800px at 30% 10%, rgba(0,255,204,0.05), transparent 60%),
+      radial-gradient(900px 700px at 80% 90%, rgba(255,0,255,0.05), transparent 60%),
+      #06070f;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+  <div class="console-overlay screen-menu">
+
+    <div class="hud-cockpit">
+      <div class="hud-cluster" style="display:flex;gap:20px;align-items:center;"></div>
+    </div>
+
+    <!-- Top wallet / player panel (logged-out state with the new "Link wallet" pill) -->
+    <div class="console-interactive wallet-panel-container">
+      <div class="player-id-panel">
+        <div class="status-light disconnected"></div>
+        <button class="connect-prompt">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          <span>Link wallet</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Center stage -->
+    <div class="center-stage" style="flex:1;display:flex;justify-content:center;align-items:center;">
+      <div class="menu-screen" style="text-align:center;width:100%;display:flex;flex-direction:column;align-items:center;">
+        <h1 class="neon-title">Space Cargo<br>Runner</h1>
+
+        <div class="mission-strip">
+          <div class="mission-chip"><span>Run 750m</span><strong>0 / 750</strong></div>
+          <div class="mission-chip"><span>Secure 12 cargo</span><strong>0 / 12</strong></div>
+          <div class="mission-chip"><span>Survive 90s</span><strong>0 / 90</strong></div>
+        </div>
+
+        <div class="live-comms-ticker" style="margin-top:40px;border:1px solid #00ffcc;padding:15px;background:rgba(5,5,10,0.85);color:#00ffcc;font-family:monospace;width:100%;max-width:600px;height:140px;overflow:hidden;border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,255,204,0.1);">
+          <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;border-bottom:1px solid rgba(0,255,204,0.3);padding-bottom:6px;text-align:left;display:flex;align-items:center;gap:8px;">
+            <div class="status-light connected" style="width:8px;height:8px;"></div>
+            GLOBAL LIVE COMMS LINK
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;text-align:left;font-size:13px;">
+            <span class="blinking" style="color:#8899b5;">Awaiting incoming transmissions...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom dashboard: all six controls must stay visible -->
+    <div class="console-dashboard console-interactive">
+      <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+        <button class="physical-btn primary">🚀 Start engine</button>
+        <button class="physical-btn">⚙️ Upgrades</button>
+        <button class="physical-btn">🎨 Hangar</button>
+        <button class="physical-btn">🏅 Records</button>
+        <button class="physical-btn">🏆 Leaderboard</button>
+        <button class="physical-btn">How to play</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

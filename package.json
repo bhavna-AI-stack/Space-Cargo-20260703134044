@@ -1,0 +1,23 @@
+{
+  "name": "space-cargo-runner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm --workspace frontend run build",
+    "dev:frontend": "npm --workspace frontend run dev",
+    "preview:frontend": "npm --workspace frontend run preview",
+    "lint:frontend": "npm --workspace frontend run lint",
+    "test": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "puppeteer": "^25.1.0"
+  }
+}

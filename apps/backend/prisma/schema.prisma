@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String        @id @default(uuid())
+  telegramId     String?       @unique
+  walletAddress  String?       @unique
+  username       String
+  usernameLowercase String    @unique
+  coins          Int           @default(0)
+  xp             Int           @default(0)
+  highScore      Int           @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  ship           Ship?
+  sessions       GameSession[]
+  rewardClaims   RewardClaim[]
+}
+
+model Ship {
+  id             String        @id @default(uuid())
+  userId         String        @unique
+  user           User          @relation(fields: [userId], references: [id])
+  engineLevel    Int           @default(1)
+  shieldLevel    Int           @default(1)
+  fuelLevel      Int           @default(1)
+  cargoBayLevel  Int           @default(1)
+  magnetLevel    Int           @default(1)
+}
+
+model GameSession {
+  id             String        @id @default(uuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id])
+  distance       Int           @default(0)
+  cargoCollected Int           @default(0)
+  coinsEarned    Int           @default(0)
+  xpEarned       Int           @default(0)
+  damageTaken    Int           @default(0)
+  createdAt      DateTime      @default(now())
+}
+
+model RewardClaim {
+  id            String   @id @default(uuid())
+  userId        String
+  walletAddress String
+  amount        Int
+  nonce         Int
+  signature     String
+  claimed       Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id])
+}

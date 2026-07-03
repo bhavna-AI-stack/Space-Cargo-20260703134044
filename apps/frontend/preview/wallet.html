@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wallet modal preview</title>
+<link rel="stylesheet" href="../src/App.css" />
+<link rel="stylesheet" href="../src/styles/console.css" />
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: #06070f; overflow: hidden; }
+</style>
+</head>
+<body>
+  <div class="modal-backdrop">
+    <div class="wallet-modal">
+      <button class="wallet-modal__close" aria-label="Close">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+
+      <div class="wallet-modal__aside">
+        <div class="wallet-modal__brand">
+          <span class="wallet-modal__eyebrow">Provider Uplink</span>
+          <h3 class="wallet-modal__aside-title">Link your wallet</h3>
+        </div>
+        <div class="wallet-modal__providers">
+          <button class="provider-btn selected">
+            <span class="provider-btn__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00ffcc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+            <span class="provider-btn__name">MetaMask</span>
+          </button>
+          <button class="provider-btn">
+            <span class="provider-btn__icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8899b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+            <span class="provider-btn__name">Rainbow</span>
+          </button>
+        </div>
+        <div class="wallet-modal__note">
+          <span class="status-light connected" style="width:7px;height:7px;flex-shrink:0;"></span>
+          Non-custodial. We never touch your keys.
+        </div>
+      </div>
+
+      <div class="wallet-modal__stage" id="stage"></div>
+    </div>
+  </div>
+
+  <script>
+    var walletSvg = '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>';
+    var phoneSvg = '<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>';
+    var extSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>';
+    var copySvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+
+    var defaultStage =
+      '<div class="wallet-stage__inner">' +
+        '<div class="wallet-stage__halo">' + walletSvg + '</div>' +
+        '<h2 class="wallet-stage__title">System standby</h2>' +
+        '<p class="wallet-stage__body">Select a provider to authenticate your ship and establish an uplink.</p>' +
+      '</div>';
+
+    var mobileStage =
+      '<div class="wallet-stage__inner">' +
+        '<div class="wallet-stage__halo">' + phoneSvg + '</div>' +
+        '<h2 class="wallet-stage__title">Open in MetaMask</h2>' +
+        '<p class="wallet-stage__body">Mobile browsers can\'t link a wallet directly. Open the game inside MetaMask\'s built-in browser to connect and auto-link.</p>' +
+        '<a class="physical-btn primary wallet-stage__cta" href="#">Open in MetaMask ' + extSvg + '</a>' +
+        '<button class="wallet-stage__ghost-btn">' + copySvg + ' Copy game link</button>' +
+        '<button class="wallet-stage__link">&larr; Back</button>' +
+      '</div>';
+
+    // Mirror the real logic: on phone-width viewports a tapped provider shows the
+    // "open in app" screen (previously this pane rendered empty).
+    document.getElementById('stage').innerHTML =
+      window.innerWidth <= 720 ? mobileStage : defaultStage;
+  </script>
+</body>
+</html>
